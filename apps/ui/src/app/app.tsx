@@ -11,27 +11,42 @@ export function App() {
   const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
   const [mfaRequired, setMfaRequired] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
-  const [accessToken, setAccessToken] = useState<string>(localStorage.getItem('accessToken') || '');
+  const [accessToken, setAccessToken] = useState<string>(
+    localStorage.getItem('accessToken') || ''
+  );
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Test email address
-    if (!passwordRequired && !mfaRequired && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    if (
+      !passwordRequired &&
+      !mfaRequired &&
+      !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)
+    ) {
       alert('Please enter a valid email address.');
       return;
     }
 
     // Test password
-    if (passwordRequired && !password) {
-      alert('Please enter a password.');
+    if (
+      passwordRequired &&
+      !/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,30}$/.test(password)
+    ) {
+      alert(
+        'Password must be 8-30 characters long and contain at least one uppercase letter, one number and one special character.'
+      );
       return;
     }
 
     try {
       const {
         data: { accessToken, requiresMfa, requiresPassword },
-      } = await axios.post(`${apiUrl}/login`, { email, ...(password && { password }), otp });
+      } = await axios.post(`${apiUrl}/login`, {
+        email,
+        ...(password && { password }),
+        otp,
+      });
 
       setMfaRequired(requiresMfa);
       setPasswordRequired(requiresPassword);
@@ -62,7 +77,7 @@ export function App() {
             <h3>Logged in</h3>
             <button onClick={handleLogout}>Logout</button>
           </>
-          ) : (
+        ) : (
           <>
             <h3>Login</h3>
             <form onSubmit={handleLogin}>
@@ -82,9 +97,9 @@ export function App() {
 
               {passwordRequired && (
                 <div className="mt-10">
-                  <label htmlFor='password'>Password</label>
+                  <label htmlFor="password">Password</label>
                   <input
-                    id='password'
+                    id="password"
                     type="password"
                     value={password}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -97,9 +112,9 @@ export function App() {
 
               {mfaRequired && (
                 <div className="mt-10">
-                  <label htmlFor='otp'>One-Time Password (OTP)</label>
+                  <label htmlFor="otp">One-Time Password (OTP)</label>
                   <input
-                    id='otp'
+                    id="otp"
                     type="text"
                     value={otp}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -111,7 +126,9 @@ export function App() {
                   />
                 </div>
               )}
-              <button type="submit" className='mt-10'>Login</button>
+              <button type="submit" className="mt-10">
+                Login
+              </button>
             </form>
           </>
         )}
