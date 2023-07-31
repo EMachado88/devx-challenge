@@ -1,4 +1,4 @@
-import './app.module.scss';
+// import styles from './app.module.scss';
 
 import axios from 'axios';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ export function App() {
       <section>
         <h3>Login</h3>
         <form onSubmit={handleLoginSubmit}>
-          <div>
+          <div className='mb-5'>
             <label htmlFor="email">Email*</label>
           </div>
           <input
