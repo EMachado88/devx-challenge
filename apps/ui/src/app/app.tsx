@@ -100,6 +100,7 @@ export function App() {
                       setOtp(event.target.value)
                     }
                     pattern="\d{6}"
+                    maxLength={6}
                     required
                   />
                 </div>
