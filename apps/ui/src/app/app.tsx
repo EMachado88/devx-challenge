@@ -17,8 +17,14 @@ export function App() {
     e.preventDefault();
 
     // Test email address
-    if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    if (!passwordRequired && !mfaRequired && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       alert('Please enter a valid email address.');
+      return;
+    }
+
+    // Test password
+    if (passwordRequired && !password) {
+      alert('Please enter a password.');
       return;
     }
 
