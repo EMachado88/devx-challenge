@@ -4,6 +4,7 @@ export interface IUser extends Document {
   email: string;
   password?: string;
   lastLogin: Date | null;
+  otp?: string;
 }
 
 const userSchema: Schema = new mongoose.Schema({
@@ -18,6 +19,9 @@ const userSchema: Schema = new mongoose.Schema({
   lastLogin: {
     type: Date,
     default: null,
+  },
+  otp: {
+    type: String,
   },
 });
 
