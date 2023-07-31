@@ -17,6 +17,7 @@ html, body {
 
 label {
   font-size: 12px;
+  display: block;
 }
 
 input {
@@ -52,4 +53,20 @@ button {
 
 .mr-5 {
   margin-right: 5px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mr-10 {
+  margin-right: 10px;
 }
