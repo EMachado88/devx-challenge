@@ -3,7 +3,6 @@ import './app.module.scss';
 
 import axios from 'axios';
 import { useState } from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
 
 const apiUrl = 'http://localhost:3000';
 
@@ -30,33 +29,22 @@ export function App() {
 
   return (
     <div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <section>
-              <h1>XPTO Sys</h1>
-              <h3>Login</h3>
-              <form onSubmit={handleLoginSubmit}>
-                <div>
-                 <label htmlFor="email">Email*</label>
-                </div>
-                <input type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-                <button type="submit">Login</button>
-              </form>
-            </section>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
+      <h1>XPTO Sys</h1>
+      <section>
+        <h3>Login</h3>
+        <form onSubmit={handleLoginSubmit}>
+          <div>
+            <label htmlFor="email">Email*</label>
+          </div>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <button type="submit">Login</button>
+        </form>
+      </section>
     </div>
   );
 }
