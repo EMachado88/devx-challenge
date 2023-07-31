@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import './app.module.scss';
 
 import axios from 'axios';
