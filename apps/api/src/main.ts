@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 
 import User, { IUser } from './models/User';
 
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const host: string = process.env.HOST ?? 'localhost';
+const port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const loginDays = 7;
 
