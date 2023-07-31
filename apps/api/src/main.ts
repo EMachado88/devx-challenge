@@ -57,7 +57,7 @@ app.post('/login', async (req: Request, res: Response) => {
   const { email, password, otp } = req.body;
 
   try {
-    let user: IUser = await User.findOne({ email });
+    let user: IUser = await User.findOne({ email }).populate('password');
 
     // If the user doesn't exist, create it
     if (!user) {

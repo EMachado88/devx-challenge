@@ -15,6 +15,7 @@ const userSchema: Schema = new mongoose.Schema({
   },
   password: {
     type: String,
+    select: false,
   },
   lastLogin: {
     type: Date,
