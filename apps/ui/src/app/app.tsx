@@ -78,59 +78,56 @@ export function App() {
             <button onClick={handleLogout}>Logout</button>
           </>
         ) : (
-          <>
-            <h3>Login</h3>
-            <form onSubmit={handleLogin}>
-              {!passwordRequired && !mfaRequired && (
-                <div className="mt-10">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      setEmail(event.target.value)
-                    }
-                  />
-                </div>
-              )}
+          <form onSubmit={handleLogin}>
+            {!passwordRequired && !mfaRequired && (
+              <div className="mt-10">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmail(event.target.value)
+                  }
+                />
+              </div>
+            )}
 
-              {passwordRequired && (
-                <div className="mt-10">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      setPassword(event.target.value)
-                    }
-                    required
-                  />
-                </div>
-              )}
+            {passwordRequired && (
+              <div className="mt-10">
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setPassword(event.target.value)
+                  }
+                  required
+                />
+              </div>
+            )}
 
-              {mfaRequired && (
-                <div className="mt-10">
-                  <label htmlFor="otp">One-Time Password (OTP)</label>
-                  <input
-                    id="otp"
-                    type="text"
-                    value={otp}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      setOtp(event.target.value)
-                    }
-                    pattern="\d{6}"
-                    maxLength={6}
-                    required
-                  />
-                </div>
-              )}
-              <button type="submit" className="mt-10">
-                Login
-              </button>
-            </form>
-          </>
+            {mfaRequired && (
+              <div className="mt-10">
+                <label htmlFor="otp">One-Time Password (OTP)</label>
+                <input
+                  id="otp"
+                  type="text"
+                  value={otp}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setOtp(event.target.value)
+                  }
+                  pattern="\d{6}"
+                  maxLength={6}
+                  required
+                />
+              </div>
+            )}
+            <button type="submit" className="mt-10">
+              Login
+            </button>
+          </form>
         )}
       </section>
     </div>
