@@ -22,16 +22,12 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log('[ ready ] Connected to DB'))
-  .catch((err) => console.error('Error connecting to DB:', err));
-
+// Base route
 app.get('/', (_req: Request, res: Response) => {
   res.json({ message: 'Nothing to see here, move along' });
 });
 
+// Login route
 app.post('/login', async (req: Request, res: Response) => {
   const { email } = req.body;
 
@@ -50,7 +46,17 @@ app.post('/login', async (req: Request, res: Response) => {
   return res.send({ user });
 });
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+// Init the API
+(async () => {
+  // Connect to MongoDB
+  await mongoose
+  .connect(process.env.MONGODB_URI)
+    .then(() => console.log('[ ready ] Connected to DB'))
+    .catch((err) => console.error('Error connecting to DB:', err));
+
+  // Start the HTTP server
+  app.listen(port, host, () => {
+    console.log(`[ ready ] http://${host}:${port}`);
+  });
+})();
 
