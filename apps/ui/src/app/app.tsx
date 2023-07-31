@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
+import './app.module.scss';
 
 import axios from 'axios';
 import { useState } from 'react';
@@ -32,13 +32,15 @@ export function App() {
         <Route
           path="/"
           element={
-            <div>
+            <section>
               <form onSubmit={handleLoginSubmit}>
-                <label htmlFor="email">Email</label>
+                <div>
+                 <label htmlFor="email">Email*</label>
+                </div>
                 <input type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} />
                 <button type="submit">Login</button>
               </form>
-            </div>
+            </section>
           }
         />
         <Route

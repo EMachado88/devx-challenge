@@ -1,1 +1,32 @@
-/* Your styles goes here. */
+$black: #1e1e1e;
+$blue: #3030ad;
+
+* {
+  box-sizing: border-box;
+  color: $black;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input {
+  all: unset;
+  background-color: transparent;
+  border: 1px solid $black;
+  padding: 5px;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: $blue;
+  border: 1px solid $blue;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+}
