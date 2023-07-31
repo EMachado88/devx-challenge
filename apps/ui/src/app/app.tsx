@@ -39,7 +39,7 @@ export function App() {
             type="email"
             id="email"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
           />
           <button type="submit">Login</button>
         </form>
