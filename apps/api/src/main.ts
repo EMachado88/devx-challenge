@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send({ message: 'Hello API' });
+  res.send({ message: 'Nothing to see here, move along' });
 });
 
 app.post('/login', (req, res) => {
