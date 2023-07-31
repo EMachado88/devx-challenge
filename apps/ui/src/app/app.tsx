@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 
+const apiUrl = 'http://localhost:3000';
+
 export function App() {
   const [email, setEmail] = useState<string>('');
 
@@ -18,7 +20,7 @@ export function App() {
     }
 
     try {
-      const { data } = await axios.post('http://localhost:3000/login', { email });
+      const { data } = await axios.post(`${apiUrl}/login`, { email });
       console.log(data);
     } catch (error) {
       alert('Login failed!');
@@ -33,6 +35,8 @@ export function App() {
           path="/"
           element={
             <section>
+              <h1>XPTO Sys</h1>
+              <h3>Login</h3>
               <form onSubmit={handleLoginSubmit}>
                 <div>
                  <label htmlFor="email">Email*</label>
