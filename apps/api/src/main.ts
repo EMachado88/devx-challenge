@@ -30,28 +30,6 @@ app.get('/', (_req: Request, res: Response) => {
   res.json({ message: 'Nothing to see here, move along' });
 });
 
-// TODO: DELETE THIS
-// Reset all users
-app.get('/reset', async (_req: Request, res: Response) => {
-  try {
-    await User.deleteMany({});
-    return res.json({ message: 'All users deleted' });
-  } catch (error) {
-    return res.status(500).json({ error });
-  }
-});
-
-// Get all users
-app.get('/users', async (_req: Request, res: Response) => {
-  try {
-    const users = await User.find({});
-    return res.json({ users });
-  } catch (error) {
-    return res.status(500).json({ error });
-  }
-});
-// END TODO
-
 // Login route
 app.post('/login', async (req: Request, res: Response) => {
   const { email, password, otp } = req.body;
