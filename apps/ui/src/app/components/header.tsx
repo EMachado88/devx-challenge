@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
+import appRoutes from '../constants/app-routes';
+
 interface HeaderProps {
   openLogin: () => void;
   loggedIn: boolean;
@@ -16,21 +18,21 @@ export function Header(props: HeaderProps) {
     <header>
       <nav className="navbar navbar-dark navbar-expand-lg bg-dark text-white">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand">
+          <Link to={appRoutes.home} className="navbar-brand">
             XPTO Systems, Ltd
           </Link>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/" className={`nav-link${pathname === '/' ? ' active' : ''}`}>
+                <Link to={appRoutes.home} className={`nav-link${pathname === appRoutes.home ? ' active' : ''}`}>
                   Home
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  to="/account"
-                  className={`nav-link${loggedIn ? '' : ' disabled'}${pathname === '/account' ? ' active' : ''}`}
+                  to={appRoutes.account}
+                  className={`nav-link${loggedIn ? '' : ' disabled'}${pathname === appRoutes.account ? ' active' : ''}`}
                   aria-disabled={loggedIn}
                 >
                   Account

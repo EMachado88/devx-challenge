@@ -9,6 +9,8 @@ import { Home } from './pages/home';
 import { Header } from './components/header';
 import { LoginModal } from './components/login-modal';
 
+import appRoutes from './constants/app-routes';
+
 const apiUrl = 'http://localhost:3000';
 
 export function App() {
@@ -78,7 +80,7 @@ export function App() {
       if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
         setAccessToken(accessToken);
-        navigate('/account');
+        navigate(appRoutes.account);
         setShowLogin(false);
       }
 
@@ -105,9 +107,9 @@ export function App() {
         logout={handleLogout}
       />
       <Routes>
-        <Route path="/" element={<Home openLogin={openLogin} />} />
+        <Route path={appRoutes.home} element={<Home openLogin={openLogin} />} />
         <Route
-          path="/account"
+          path={appRoutes.account}
           element={
             accessToken ? (
               <main className="p-5">
@@ -115,7 +117,7 @@ export function App() {
                 <p>This is protected</p>
               </main>
             ) : (
-              <Navigate to="/" />
+              <Navigate to={appRoutes.home} />
             )
           }
         />
