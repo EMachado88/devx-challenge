@@ -1,11 +1,33 @@
-// import styles from './app.module.scss';
-
-import axios from 'axios';
 import { useState } from 'react';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+
+import { Home } from './pages/home';
+import { Header } from './components/header';
+import { LoginModal } from './components/login-modal';
 
 const apiUrl = 'http://localhost:3000';
 
 export function App() {
+  const navigate = useNavigate();
+
+  const [showLogin, setShowLogin] = useState<boolean>(false);
+
+  const closeLogin = () => setShowLogin(false);
+  const openLogin = () => {
+    if (!accessToken) {
+      setShowLogin(true);
+    } else {
+      navigate('/account');
+    }
+  };
+
+  const [showToast, setShowToast] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>('');
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
@@ -24,7 +46,8 @@ export function App() {
       !mfaRequired &&
       !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)
     ) {
-      alert('Please enter a valid email address.');
+      setToastMessage('Please enter a valid email address.');
+      setShowToast(true);
       return;
     }
 
@@ -33,9 +56,10 @@ export function App() {
       passwordRequired &&
       !/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,30}$/.test(password)
     ) {
-      alert(
+      setToastMessage(
         'Password must be 8-30 characters long and contain at least one uppercase letter, one number and one special character.'
       );
+      setShowToast(true);
       return;
     }
 
@@ -54,9 +78,14 @@ export function App() {
       if (accessToken) {
         localStorage.setItem('accessToken', accessToken);
         setAccessToken(accessToken);
+        navigate('/account');
+        setShowLogin(false);
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      alert(error.response.data.error);
+      setToastMessage(error.response.data.message);
+      setShowToast(true);
     }
   };
 
@@ -70,66 +99,58 @@ export function App() {
 
   return (
     <div>
-      <h1>XPTO Login Sys</h1>
-      <section>
-        {accessToken ? (
-          <>
-            <h3>Logged in</h3>
-            <button onClick={handleLogout}>Logout</button>
-          </>
-        ) : (
-          <form onSubmit={handleLogin}>
-            {!passwordRequired && !mfaRequired && (
-              <div className="mt-10">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setEmail(event.target.value)
-                  }
-                />
-              </div>
-            )}
+      <Header
+        openLogin={openLogin}
+        loggedIn={!!accessToken}
+        logout={handleLogout}
+      />
+      <Routes>
+        <Route path="/" element={<Home openLogin={openLogin} />} />
+        <Route
+          path="/account"
+          element={
+            accessToken ? (
+              <main className="p-5">
+                <h1>Account</h1>
+                <p>This is protected</p>
+              </main>
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+      </Routes>
 
-            {passwordRequired && (
-              <div className="mt-10">
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setPassword(event.target.value)
-                  }
-                  required
-                />
-              </div>
-            )}
+      <LoginModal
+        show={showLogin}
+        close={closeLogin}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        otp={otp}
+        setOtp={setOtp}
+        passwordRequired={passwordRequired}
+        setPasswordRequired={setPasswordRequired}
+        mfaRequired={mfaRequired}
+        setMfaRequired={setMfaRequired}
+        handleLogin={handleLogin}
+      />
 
-            {mfaRequired && (
-              <div className="mt-10">
-                <label htmlFor="otp">One-Time Password (OTP)</label>
-                <input
-                  id="otp"
-                  type="text"
-                  value={otp}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setOtp(event.target.value)
-                  }
-                  pattern="\d{6}"
-                  maxLength={6}
-                  required
-                />
-              </div>
-            )}
-            <button type="submit" className="mt-10">
-              Login
-            </button>
-          </form>
-        )}
-      </section>
+      <ToastContainer position="bottom-center" style={{ zIndex: 1056 }}>
+        <Toast
+          bg="danger"
+          show={showToast}
+          className="d-inline-block m-1"
+          autohide
+          animation
+          onClose={() => setShowToast(false)}
+        >
+          <Toast.Header closeButton>
+            <span className="me-auto">{toastMessage}</span>
+          </Toast.Header>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 }
